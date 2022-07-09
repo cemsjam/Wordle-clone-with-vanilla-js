@@ -10,36 +10,73 @@ let todaysWord = !staticIndex
   : words[staticIndex];
 // game variables and initial selectors
 const gameContainer = document.querySelector(".game-container");
+
 let game = {
   ROWS: 6,
   COLS: 5,
-  currentGuess: "",
+  currentGuess: [],
   guesses: [],
   rows: [],
   currentRowIndex: 0,
+  state: true,
 };
-//rows and cols
+
 function buildGameBoard() {
   for (let i = 0; i < game.ROWS; i++) {
     let row = document.createElement("div");
     row.classList.add("row");
-    row.setAttribute("data-guess", "");
+
     gameContainer.appendChild(row);
     for (let j = 0; j < game.COLS; j++) {
       let tile = document.createElement("div");
       tile.classList.add("tile");
-      tile.textContent = "a";
+      tile.dataset.state = "empty";
       row.appendChild(tile);
     }
   }
 }
 buildGameBoard();
 game.rows = [...document.querySelectorAll(".row")];
-let activeRow = game.rows[game.currentRowIndex];
-console.log(activeRow);
 
-window.addEventListener("keydown", handleKeyDown);
+if (game.state) {
+  window.addEventListener("keydown", handleKeyDown);
+}
 
 function handleKeyDown(e) {
-  console.log("wtf");
+  const { rows, currentRowIndex, COLS, currentGuess } = game;
+  let activeRow = rows[currentRowIndex];
+  let tiles = [...activeRow.children];
+  let pressedKey = e.key.toLowerCase();
+  console.log(currentGuess.length);
+  if (currentGuess.length == COLS) {
+    return (activeRow.dataset.word = currentGuess.join(""));
+  }
+  if (pressedKey == "enter") {
+    if (!activeRow.dataset.word) {
+      return;
+    } else {
+      submitGuess(activeRow);
+    }
+  }
+
+  spreadLetters(pressedKey, tiles);
+}
+
+function spreadLetters(key, tiles) {
+  let { currentGuess } = game;
+
+  currentGuess.push(key);
+  for (let i = 0; i < currentGuess.length; i++) {
+    tiles[i].dataset.letter = currentGuess[i];
+    tiles[i].dataset.state = "focus";
+  }
+
+  console.log(currentGuess);
+}
+
+function submitGuess(activeRow) {
+  console.log(activeRow.dataset.word == todaysWord);
+  if (activeRow.dataset.word == todaysWord) {
+    console.log("you won");
+  }
 }

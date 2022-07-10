@@ -11,9 +11,9 @@
 
   --ff-base: "Inter", sans-serif;
   --ff-headings: "Barlow Condensed", sans-serif;
+  --bg-color: #121213;
 
   --tile-border-color: var(--color-tone-4);
-  --bg-color: #121213;
   --tile-width: 62px;
   --tile-offset: 5px;
   --tile-text-color: #d7dadc;
@@ -21,8 +21,10 @@
   --header-height: 50px;
   --header-border-color: var(--color-tone-4);
   --header-text-color: var(--tile-text-color);
-  --state-focused: var(--color-tone-3);
+  --state-active: var(--color-tone-3);
   --state-correct: var(--correct);
+  --state-wrong: var(--color-tone-3);
+  --state-close: #b59f3b;
 }
 
 * {
@@ -69,6 +71,7 @@ body {
   justify-content: center;
   align-items: center;
   gap: var(--tile-offset);
+  position: relative;
 }
 .row {
   width: 100%;
@@ -91,13 +94,71 @@ body {
   align-items: center;
   user-select: none;
   position: relative;
+  backface-visibility: hidden;
+  transition: transform 250ms linear;
+}
+.tile.flip {
+  transform: rotateX(90deg);
 }
 .tile::after {
   content: attr(data-letter);
 }
-[data-state="focus"] {
-  border-color: var(--state-focused);
+[data-state="active"] {
+  border-color: var(--state-active);
+  transition: 300ms ease;
+  animation: state-active 500ms ease forwards;
 }
 [data-state="correct"] {
   background-color: var(--state-correct);
+  border-color: var(--state-correct);
+}
+[data-state="close"] {
+  background-color: var(--state-close);
+  border-color: var(--state-close);
+}
+[data-state="wrong"] {
+  background-color: var(--state-wrong);
+  border-color: var(--state-wrong);
+}
+.alert-container {
+  position: absolute;
+  top: 15vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.alert {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.875rem;
+  font-weight: bold;
+  text-transform: capitalize;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  color: var(--bg-color);
+  background-color: var(--tile-text-color);
+  z-index: 1;
+  transition: 3s ease;
+}
+.alert.hide {
+  opacity: 0;
+}
+@keyframes state-active {
+  from {
+    opacity: 0.5;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

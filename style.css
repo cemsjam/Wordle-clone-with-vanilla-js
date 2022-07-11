@@ -81,6 +81,9 @@ body {
   justify-content: center;
   gap: var(--tile-offset);
 }
+.row.shake {
+  animation: shake 500ms ease-in-out;
+}
 .tile {
   --duration: 250ms;
   max-width: var(--tile-width);
@@ -104,7 +107,7 @@ body {
 .tile::after {
   content: attr(data-letter);
 }
-:where([data-state="active"]) {
+[data-state="active"] {
   border-color: var(--state-active);
 }
 [data-state="correct"] {
@@ -121,6 +124,9 @@ body {
 }
 .tile.flipped {
   transform: rotateX(90deg);
+}
+.tile.active {
+  animation: state-active 250ms ease-in-out;
 }
 
 .tile.flipped:nth-child(2) {
@@ -176,5 +182,33 @@ body {
   to {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes shake {
+  5% {
+    transform: translateX(-1.5px);
+  }
+  20% {
+    transform: translateX(1.5px);
+  }
+  35% {
+    transform: translateX(-3.5px);
+  }
+  47% {
+    transform: translateX(3.5px);
+  }
+  59% {
+    transform: translateX(-3.5px);
+  }
+  71% {
+    transform: translateX(3.5px);
+  }
+  83% {
+    transform: translateX(-3.5px);
+  }
+
+  100% {
+    transform: translateX(0);
   }
 }

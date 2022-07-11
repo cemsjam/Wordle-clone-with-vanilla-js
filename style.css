@@ -54,6 +54,7 @@ body {
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
+  flex-shrink: 0;
 }
 .main-header h1 {
   font-family: var(--ff-headings);
@@ -81,10 +82,12 @@ body {
   gap: var(--tile-offset);
 }
 .tile {
+  --duration: 250ms;
   max-width: var(--tile-width);
   width: 100%;
   aspect-ratio: 1;
   border: 2px solid var(--tile-border-color);
+  background-color: var(--bg-color);
   color: var(--tile-text-color);
   font-size: clamp(1rem, 5vw + 0.5rem, 2rem);
   font-weight: bold;
@@ -94,19 +97,15 @@ body {
   align-items: center;
   user-select: none;
   position: relative;
-  backface-visibility: hidden;
-  transition: transform 250ms linear;
+  transition: transform var(--duration) linear;
+  transition-delay: calc(var(--duration, 250ms) * var(--index, 0));
 }
-.tile.flip {
-  transform: rotateX(90deg);
-}
+
 .tile::after {
   content: attr(data-letter);
 }
-[data-state="active"] {
+:where([data-state="active"]) {
   border-color: var(--state-active);
-  transition: 300ms ease;
-  animation: state-active 500ms ease forwards;
 }
 [data-state="correct"] {
   background-color: var(--state-correct);
@@ -120,6 +119,23 @@ body {
   background-color: var(--state-wrong);
   border-color: var(--state-wrong);
 }
+.tile.flipped {
+  transform: rotateX(90deg);
+}
+
+.tile.flipped:nth-child(2) {
+  --index: 1;
+}
+.tile.flipped:nth-child(3) {
+  --index: 2;
+}
+.tile.flipped:nth-child(4) {
+  --index: 3;
+}
+.tile.flipped:nth-child(5) {
+  --index: 4;
+}
+
 .alert-container {
   position: absolute;
   top: 15vh;

@@ -1,4 +1,4 @@
-let words = ["horse", "pants", "party", "music"];
+let words = ["horse", "domuz", "party", "music"];
 
 const generateRandomNumber = () => {
   return Math.floor(Math.random() * words.length);
@@ -14,11 +14,11 @@ const alertContainer = gameContainer.querySelector(".alert-container");
 let game = {
   ROWS: 6,
   WORD_LENGTH: 5,
-  FLIP_ANIMATION_DURATION: 500,
   word: [],
   currentGuess: "",
   guesses: [],
   currentRowIndex: 0,
+
   state: false,
 };
 function startGame() {
@@ -39,6 +39,7 @@ function buildGameBoard() {
       let tile = document.createElement("div");
       tile.classList.add("tile");
       tile.dataset.state = "empty";
+
       row.appendChild(tile);
     }
   }
@@ -75,7 +76,6 @@ function spreadLetters(key, row) {
   row.dataset.word = word.reduce((acc, tile) => {
     return acc + tile;
   }, "");
-  console.log(row, game.currentGuess, word);
 }
 function getActiveRow() {
   return gameContainer.querySelectorAll(".row")[game.currentRowIndex];
@@ -98,14 +98,13 @@ function deleteKey(activeRow) {
 function submitGuess(activeRow) {
   const { currentRowIndex, WORD_LENGTH } = game;
   getCurrentGuess(activeRow);
+
   if (!game.currentGuess || game.currentGuess.length < WORD_LENGTH)
     return showAlert("not enough letter");
   else {
     let tiles = [...activeRow.querySelectorAll("[data-letter]")];
     tiles.forEach((tile, i) => flipTile(tile, i));
-    game.currentRowIndex = currentRowIndex + 1;
-    game.currentGuess = "";
-    game.word = [];
+    game.guesses.push(game.currentGuess);
   }
 }
 
@@ -124,11 +123,42 @@ function showAlert(message, duration = 1000) {
 }
 
 function flipTile(tile, i) {
-  if (todaysWord[i] === tile.dataset.letter) {
-    tile.dataset.state = "correct";
-  } else if (todaysWord.includes(tile.dataset.letter)) {
-    tile.dataset.state = "close";
+  let letter = tile.dataset.letter;
+  tile.classList.add("flipped");
+  stopGame();
+  tile.addEventListener(
+    "transitionend",
+    () => {
+      tile.classList.remove("flipped");
+      if (todaysWord[i] === letter) {
+        tile.dataset.state = "correct";
+      } else if (todaysWord.includes(letter)) {
+        tile.dataset.state = "close";
+      } else {
+        tile.dataset.state = "wrong";
+      }
+      if (i === game.WORD_LENGTH - 1) {
+        startGame();
+        checkWinOrLose();
+      }
+    },
+    { once: true }
+  );
+}
+function checkWinOrLose() {
+  if (todaysWord == game.currentGuess) {
+    showAlert("You Win", 5000);
+    stopGame();
+    return;
+  }
+  if (game.guesses.length == game.ROWS) {
+    showAlert(todaysWord, null);
+    stopGame();
+    return;
   } else {
-    tile.dataset.state = "wrong";
+    game.currentRowIndex = game.currentRowIndex + 1;
+    game.currentGuess = "";
+    game.word = [];
+    return;
   }
 }

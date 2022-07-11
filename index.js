@@ -23,6 +23,7 @@ const keyboardContainer = document.querySelector(".keyboard-container");
 
 const ROWS = 6;
 const WORD_LENGTH = 5;
+const STATE_ACTIVE_ANIMATION_DURATION = 250;
 let word = [];
 let currentGuess;
 let guesses = [];
@@ -164,7 +165,9 @@ function submitGuess(activeRow) {
 function flipTile(tile, i) {
   let letter = tile.dataset.letter;
   let key = keyboardContainer.querySelector(`[data-key="${letter}"]`);
-  tile.classList.add("flipped");
+  setTimeout(() => {
+    tile.classList.add("flipped");
+  }, STATE_ACTIVE_ANIMATION_DURATION);
   stopGame();
   tile.addEventListener(
     "transitionend",
@@ -187,6 +190,7 @@ function flipTile(tile, i) {
     },
     { once: true }
   );
+  console.log(key);
 }
 
 //#endregion
@@ -281,6 +285,7 @@ function buildKeyboardRow(letters, isLastRow) {
     button.classList.add("keyboard-btn");
     button.textContent = letter;
     button.dataset.key = letter;
+    button.dataset.state = "empty";
     button.onclick = () => {};
     row.appendChild(button);
   }

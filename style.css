@@ -142,6 +142,7 @@ body {
   margin-right: 6px;
   border: none;
   cursor: pointer;
+  transition: none;
 }
 .keyboard-btn[data-key="enter"],
 .keyboard-btn[data-key="backspace"] {
@@ -179,6 +180,7 @@ body {
   border-color: var(--state-wrong);
 }
 .tile.flipped {
+  animation: unset;
   transform: rotateX(90deg);
 }
 .tile.active {
@@ -200,7 +202,7 @@ body {
 
 .alert-container {
   position: absolute;
-  top: 15vh;
+  top: 8vh;
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
@@ -212,10 +214,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: bold;
   text-transform: capitalize;
-  padding: 0.75rem;
+  padding: 1rem 0.75rem;
   margin-bottom: 0.5rem;
   border-radius: 8px;
   color: var(--bg-color);

@@ -12,15 +12,25 @@
   --ff-base: "Inter", sans-serif;
   --ff-headings: "Barlow Condensed", sans-serif;
   --bg-color: #121213;
+  --ff-keyboard: "Inter", sans-serif;
+
+  --game-max-width: 500px;
+
+  --header-height: 50px;
+  --header-border-color: var(--color-tone-4);
+  --header-text-color: var(--tile-text-color);
 
   --tile-border-color: var(--color-tone-4);
   --tile-width: 62px;
   --tile-offset: 5px;
   --tile-text-color: #d7dadc;
-  --game-max-width: 500px;
-  --header-height: 50px;
-  --header-border-color: var(--color-tone-4);
-  --header-text-color: var(--tile-text-color);
+
+  --keyboard-height: 200px;
+  --keyboard-max-width: var(--game-max-width);
+  --keyboard-btn-bg: var(--color-tone-2);
+  --keyboard-btn-color: var(--color-tone-1);
+  --keyboard-btn-height: 58px;
+
   --state-active: var(--color-tone-3);
   --state-correct: var(--correct);
   --state-wrong: var(--color-tone-3);
@@ -39,7 +49,7 @@ body {
   height: 100%;
 }
 body {
-  font-family: sans-serif;
+  font-family: var(--ff-base);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -103,7 +113,50 @@ body {
   transition: transform var(--duration) linear;
   transition-delay: calc(var(--duration, 250ms) * var(--index, 0));
 }
+.keyboard-container {
+  user-select: none;
+  padding: 0 8px;
+  height: var(--keyboard-height);
+  max-width: var(--keyboard-max-width);
+  width: 100%;
+}
+.keyboard-container .keyboard-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px;
+}
 
+.keyboard-btn {
+  font-family: inherit;
+  font-size: 0.83125rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  height: var(--keyboard-btn-height);
+  border-radius: 4px;
+  background-color: var(--keyboard-btn-bg);
+  color: var(--keyboard-btn-color);
+  margin-right: 6px;
+  border: none;
+  cursor: pointer;
+}
+.keyboard-btn[data-key="enter"],
+.keyboard-btn[data-key="backspace"] {
+  flex: 1.5;
+  font-size: 0.75rem;
+}
+.keyboard-btn:last-child {
+  margin-right: 0;
+}
+.keyboard-row:nth-child(2):before,
+.keyboard-row:nth-child(2):after {
+  content: "";
+  display: block;
+  flex: 0.5;
+}
 .tile::after {
   content: attr(data-letter);
 }

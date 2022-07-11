@@ -231,3 +231,42 @@ function shakeTiles(el) {
     { once: true }
   );
 }
+const BACKSPACE_ICON = `<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20">
+<path fill="var(--color-tone-1)" d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"></path>
+</svg>`;
+const keyboardContainer = document.querySelector(".keyboard-container");
+function buildKeyboard() {
+  buildKeyboardRow("qwertyuiop", false);
+  buildKeyboardRow("asdfghjkl", false);
+  buildKeyboardRow("zxcvbnm", true);
+}
+buildKeyboard();
+function buildKeyboardRow(letters, isLastRow) {
+  let row = document.createElement("div");
+  row.classList.add("keyboard-row");
+  if (isLastRow) {
+    let button = document.createElement("button");
+    button.classList.add("keyboard-btn");
+    button.textContent = "enter";
+    button.dataset.key = "enter";
+    button.onclick = () => {};
+    row.appendChild(button);
+  }
+  for (let letter of letters) {
+    let button = document.createElement("button");
+    button.classList.add("keyboard-btn");
+    button.textContent = letter;
+    button.dataset.key = letter;
+    button.onclick = () => {};
+    row.appendChild(button);
+  }
+  if (isLastRow) {
+    let button = document.createElement("button");
+    button.classList.add("keyboard-btn");
+    button.innerHTML = BACKSPACE_ICON;
+    button.dataset.key = "backspace";
+    button.onclick = () => {};
+    row.appendChild(button);
+  }
+  keyboardContainer.appendChild(row);
+}

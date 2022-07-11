@@ -148,6 +148,9 @@ body {
   flex: 1.5;
   font-size: 0.75rem;
 }
+.keyboard-btn svg {
+  pointer-events: none;
+}
 .keyboard-btn:last-child {
   margin-right: 0;
 }

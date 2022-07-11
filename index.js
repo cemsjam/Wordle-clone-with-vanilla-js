@@ -14,9 +14,12 @@ let todaysWord = !staticIndex
 //#endregion
 
 // #region GAME VARIABLES AND GENERAL SELECTORS
-
+const BACKSPACE_ICON = `<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20">
+<path fill="var(--color-tone-1)" d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"></path>
+</svg>`;
 const gameContainer = document.querySelector(".game-container");
 const alertContainer = gameContainer.querySelector(".alert-container");
+const keyboardContainer = document.querySelector(".keyboard-container");
 
 const ROWS = 6;
 const WORD_LENGTH = 5;
@@ -52,10 +55,12 @@ function buildGameBoard() {
 function startGame() {
   state = true;
   window.addEventListener("keydown", handleKeyDown);
+  keyboardContainer.addEventListener("click", handleClick);
 }
 function stopGame() {
   state = false;
   window.removeEventListener("keydown", handleKeyDown);
+  keyboardContainer.removeEventListener("click", handleClick);
 }
 
 //#region onload FN & SELECTORS
@@ -85,6 +90,24 @@ function handleKeyDown(e) {
     return;
   }
   if (key.match(/^[a-z]$/)) {
+    startGame();
+    spreadLetters(key, activeRow);
+    return;
+  }
+}
+function handleClick(e) {
+  let activeRow = getActiveRow();
+
+  if (e.target.matches(`[data-key="enter"]`)) {
+    submitGuess(activeRow);
+    return;
+  }
+  if (e.target.matches(`[data-key="backspace"]`)) {
+    deleteKey(activeRow);
+    return;
+  }
+  if (e.target.matches(`[data-key]`)) {
+    let key = e.target.dataset.key;
     startGame();
     spreadLetters(key, activeRow);
     return;
@@ -140,6 +163,7 @@ function submitGuess(activeRow) {
 
 function flipTile(tile, i) {
   let letter = tile.dataset.letter;
+  let key = keyboardContainer.querySelector(`[data-key="${letter}"]`);
   tile.classList.add("flipped");
   stopGame();
   tile.addEventListener(
@@ -148,10 +172,13 @@ function flipTile(tile, i) {
       tile.classList.remove("flipped");
       if (todaysWord[i] === letter) {
         tile.dataset.state = "correct";
+        key.dataset.state = "correct";
       } else if (todaysWord.includes(letter)) {
         tile.dataset.state = "close";
+        key.dataset.state = "close";
       } else {
         tile.dataset.state = "wrong";
+        key.dataset.state = "wrong";
       }
       if (i === WORD_LENGTH - 1) {
         startGame();
@@ -231,10 +258,7 @@ function shakeTiles(el) {
     { once: true }
   );
 }
-const BACKSPACE_ICON = `<svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20">
-<path fill="var(--color-tone-1)" d="M22 3H7c-.69 0-1.23.35-1.59.88L0 12l5.41 8.11c.36.53.9.89 1.59.89h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H7.07L2.4 12l4.66-7H22v14zm-11.59-2L14 13.41 17.59 17 19 15.59 15.41 12 19 8.41 17.59 7 14 10.59 10.41 7 9 8.41 12.59 12 9 15.59z"></path>
-</svg>`;
-const keyboardContainer = document.querySelector(".keyboard-container");
+
 function buildKeyboard() {
   buildKeyboardRow("qwertyuiop", false);
   buildKeyboardRow("asdfghjkl", false);

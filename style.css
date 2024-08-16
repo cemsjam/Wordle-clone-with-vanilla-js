@@ -1,270 +1,270 @@
 :root {
-  --color-tone-1: #d7dadc;
-  --color-tone-2: #818384;
-  --color-tone-3: #565758;
-  --color-tone-4: #3a3a3c;
-  --color-tone-5: #272729;
-  --color-tone-6: #1a1a1b;
-  --color-tone-7: #121213;
-  --opacity-50: #00000080;
-  --correct: #538d4e;
+	--color-tone-1: #d7dadc;
+	--color-tone-2: #818384;
+	--color-tone-3: #565758;
+	--color-tone-4: #3a3a3c;
+	--color-tone-5: #272729;
+	--color-tone-6: #1a1a1b;
+	--color-tone-7: #121213;
+	--opacity-50: #00000080;
+	--correct: #538d4e;
 
-  --ff-base: "Inter", sans-serif;
-  --ff-headings: "Barlow Condensed", sans-serif;
-  --bg-color: #121213;
-  --ff-keyboard: "Inter", sans-serif;
+	--ff-base: "Inter", sans-serif;
+	--ff-headings: "Barlow Condensed", sans-serif;
+	--bg-color: #121213;
+	--ff-keyboard: "Inter", sans-serif;
 
-  --game-max-width: 500px;
+	--game-max-width: 500px;
 
-  --header-height: 50px;
-  --header-border-color: var(--color-tone-4);
-  --header-text-color: var(--tile-text-color);
+	--header-height: 50px;
+	--header-border-color: var(--color-tone-4);
+	--header-text-color: var(--tile-text-color);
 
-  --tile-border-color: var(--color-tone-4);
-  --tile-width: 62px;
-  --tile-offset: 5px;
-  --tile-text-color: #d7dadc;
+	--tile-border-color: var(--color-tone-4);
+	--tile-width: 62px;
+	--tile-offset: 5px;
+	--tile-text-color: #d7dadc;
 
-  --keyboard-height: 200px;
-  --keyboard-max-width: var(--game-max-width);
-  --keyboard-btn-bg: var(--color-tone-2);
-  --keyboard-btn-color: var(--color-tone-1);
-  --keyboard-btn-height: 58px;
+	--keyboard-height: 200px;
+	--keyboard-max-width: var(--game-max-width);
+	--keyboard-btn-bg: var(--color-tone-2);
+	--keyboard-btn-color: var(--color-tone-1);
+	--keyboard-btn-height: 58px;
 
-  --state-active: var(--color-tone-3);
-  --state-correct: var(--correct);
-  --state-wrong: var(--color-tone-3);
-  --state-close: #b59f3b;
+	--state-active: var(--color-tone-3);
+	--state-correct: var(--correct);
+	--state-wrong: var(--color-tone-3);
+	--state-close: #b59f3b;
 }
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 html,
 body {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 }
 body {
-  font-family: var(--ff-base);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  background-color: var(--bg-color);
+	font-family: var(--ff-base);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+	background-color: var(--bg-color);
 }
 .main-header {
-  height: var(--header-height);
-  width: 100%;
-  border-bottom: 1px solid var(--header-border-color);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-transform: uppercase;
-  flex-shrink: 0;
+	height: var(--header-height);
+	width: 100%;
+	border-bottom: 1px solid var(--header-border-color);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-transform: uppercase;
+	flex-shrink: 0;
 }
 .main-header h1 {
-  font-family: var(--ff-headings);
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--header-text-color);
+	font-family: var(--ff-headings);
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: var(--header-text-color);
 }
 .game-container {
-  max-width: var(--game-max-width);
-  width: 100%;
-  padding: 1rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--tile-offset);
-  position: relative;
+	max-width: var(--game-max-width);
+	width: 100%;
+	padding: 1rem;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: var(--tile-offset);
+	position: relative;
 }
 .row {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--tile-offset);
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--tile-offset);
 }
 .row.shake {
-  animation: shake 500ms ease-in-out;
+	animation: shake 500ms ease-in-out;
 }
 .tile {
-  --duration: 250ms;
-  max-width: var(--tile-width);
-  width: 100%;
-  aspect-ratio: 1;
-  border: 2px solid var(--tile-border-color);
-  background-color: var(--bg-color);
-  color: var(--tile-text-color);
-  font-size: clamp(1rem, 5vw + 0.5rem, 2rem);
-  font-weight: bold;
-  text-transform: uppercase;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  user-select: none;
-  position: relative;
-  transition: transform var(--duration) linear;
-  transition-delay: calc(var(--duration, 250ms) * var(--index, 0));
+	--duration: 250ms;
+	max-width: var(--tile-width);
+	width: 100%;
+	aspect-ratio: 1;
+	border: 2px solid var(--tile-border-color);
+	background-color: var(--bg-color);
+	color: var(--tile-text-color);
+	font-size: clamp(1rem, 5vw + 0.5rem, 2rem);
+	font-weight: bold;
+	text-transform: uppercase;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	user-select: none;
+	position: relative;
+	transition: transform var(--duration) linear;
 }
 .keyboard-container {
-  user-select: none;
-  padding: 0 8px;
-  height: var(--keyboard-height);
-  max-width: var(--keyboard-max-width);
-  width: 100%;
+	user-select: none;
+	padding: 0 8px;
+	height: var(--keyboard-height);
+	max-width: var(--keyboard-max-width);
+	width: 100%;
 }
 .keyboard-container .keyboard-row {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 8px;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 8px;
 }
 
 .keyboard-btn {
-  font-family: inherit;
-  font-size: 0.83125rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-  height: var(--keyboard-btn-height);
-  border-radius: 4px;
-  background-color: var(--keyboard-btn-bg);
-  color: var(--keyboard-btn-color);
-  margin-right: 6px;
-  border: none;
-  cursor: pointer;
+	font-family: inherit;
+	font-size: 0.83125rem;
+	font-weight: bold;
+	text-transform: uppercase;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
+	height: var(--keyboard-btn-height);
+	border-radius: 4px;
+	background-color: var(--keyboard-btn-bg);
+	color: var(--keyboard-btn-color);
+	margin-right: 6px;
+	border: none;
+	cursor: pointer;
 }
 .keyboard-btn[data-key="enter"],
 .keyboard-btn[data-key="backspace"] {
-  flex: 1.5;
-  font-size: 0.75rem;
+	flex: 1.5;
+	font-size: 0.75rem;
 }
 .keyboard-btn svg {
-  pointer-events: none;
+	pointer-events: none;
 }
 .keyboard-btn:last-child {
-  margin-right: 0;
+	margin-right: 0;
 }
 .keyboard-row:nth-child(2):before,
 .keyboard-row:nth-child(2):after {
-  content: "";
-  display: block;
-  flex: 0.5;
+	content: "";
+	display: block;
+	flex: 0.5;
 }
 .tile::after {
-  content: attr(data-letter);
+	content: attr(data-letter);
 }
 [data-state="active"] {
-  border-color: var(--state-active);
+	border-color: var(--state-active);
 }
 [data-state="correct"] {
-  background-color: var(--state-correct);
-  border-color: var(--state-correct);
+	background-color: var(--state-correct);
+	border-color: var(--state-correct);
 }
 [data-state="close"] {
-  background-color: var(--state-close);
-  border-color: var(--state-close);
+	background-color: var(--state-close);
+	border-color: var(--state-close);
 }
 [data-state="wrong"] {
-  background-color: var(--state-wrong);
-  border-color: var(--state-wrong);
+	background-color: var(--state-wrong);
+	border-color: var(--state-wrong);
 }
 .tile.flipped {
-  transform: rotateX(90deg);
+	transform: rotateX(90deg);
+	transition: transform 0.3s ease-in-out;
 }
 .tile.active {
-  animation: state-active 250ms ease-in-out;
+	animation: state-active 0.5s ease-in-out;
 }
 
-.tile.flipped:nth-child(2) {
-  --index: 1;
+/* .tile.flipped:nth-child(2) {
+	--index: 1;
 }
 .tile.flipped:nth-child(3) {
-  --index: 2;
+	--index: 2;
 }
 .tile.flipped:nth-child(4) {
-  --index: 3;
+	--index: 3;
 }
 .tile.flipped:nth-child(5) {
-  --index: 4;
-}
+	--index: 4;
+} */
 
 .alert-container {
-  position: absolute;
-  top: 15vh;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	position: absolute;
+	top: 15vh;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 100;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 .alert {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.875rem;
-  font-weight: bold;
-  text-transform: capitalize;
-  padding: 0.75rem;
-  margin-bottom: 0.5rem;
-  border-radius: 8px;
-  color: var(--bg-color);
-  background-color: var(--tile-text-color);
-  z-index: 1;
-  transition: 3s ease;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 0.875rem;
+	font-weight: bold;
+	text-transform: capitalize;
+	padding: 0.75rem;
+	margin-bottom: 0.5rem;
+	border-radius: 8px;
+	color: var(--bg-color);
+	background-color: var(--tile-text-color);
+	z-index: 1;
+	transition: 3s ease;
 }
 .alert.hide {
-  opacity: 0;
+	opacity: 0;
 }
 @keyframes state-active {
-  from {
-    opacity: 0.5;
-    transform: scale(0.8);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
+	from {
+		opacity: 0.5;
+		transform: scale(0.8);
+	}
+	50% {
+		opacity: 1;
+		transform: scale(1.1);
+	}
+	to {
+		transform: scale(1);
+		opacity: 1;
+	}
 }
 
 @keyframes shake {
-  5% {
-    transform: translateX(-1.5px);
-  }
-  20% {
-    transform: translateX(1.5px);
-  }
-  35% {
-    transform: translateX(-3.5px);
-  }
-  47% {
-    transform: translateX(3.5px);
-  }
-  59% {
-    transform: translateX(-3.5px);
-  }
-  71% {
-    transform: translateX(3.5px);
-  }
-  83% {
-    transform: translateX(-3.5px);
-  }
+	5% {
+		transform: translateX(-1.5px);
+	}
+	20% {
+		transform: translateX(1.5px);
+	}
+	35% {
+		transform: translateX(-3.5px);
+	}
+	47% {
+		transform: translateX(3.5px);
+	}
+	59% {
+		transform: translateX(-3.5px);
+	}
+	71% {
+		transform: translateX(3.5px);
+	}
+	83% {
+		transform: translateX(-3.5px);
+	}
 
-  100% {
-    transform: translateX(0);
-  }
+	100% {
+		transform: translateX(0);
+	}
 }
